@@ -9,6 +9,7 @@ export const Route = createFileRoute("/routing-concept/posts")({
         <nav className="flex flex-col gap-1">
           {posts.map((post) => (
             <Link
+              key={post.slug}
               to="/routing-concept/posts/$postId"
               className="rounded-lg p-2 hover:bg-neutral-200 [&.active]:bg-violet-100"
               params={{

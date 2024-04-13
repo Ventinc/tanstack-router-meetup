@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils";
 import { AppPaths } from "@/routes/__root";
 import { Link } from "@tanstack/react-router";
 import { LucideIcon } from "lucide-react";
+import React from "react";
 
 interface TreeDataItem {
   name: string;
@@ -24,7 +25,7 @@ export const Tree = ({
   return (
     <div className={cn("flex flex-col gap-0.5", className)}>
       {data.map((link) => (
-        <>
+        <React.Fragment key={`${link.to}-${link.name}`}>
           <Link
             to={link.to}
             activeOptions={{
@@ -55,7 +56,7 @@ export const Tree = ({
               className="ml-5"
             />
           ) : null}
-        </>
+        </React.Fragment>
       ))}
     </div>
   );
