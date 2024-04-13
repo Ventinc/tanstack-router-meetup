@@ -13,7 +13,7 @@ function RandomFileComponent() {
       <h1 className="text-4xl font-black">Random File</h1>
       <div className="pb-4 text-xs font-medium text-neutral-500">
         <p>Splat: {params._splat}</p>
-        <p>Seed: {params._splat.replace(/\//g, "-")}</p>
+        <p>Image Seed: {params._splat.replace(/\//g, "-")}</p>
       </div>
       <Card className="overflow-hidden">
         <img
