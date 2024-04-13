@@ -334,6 +334,11 @@ function RoutingConceptLayout() {
             <li>Not Found Routes</li>
           </ul>
         </div>
+        <div className="flex justify-center pt-4">
+          <Button size="sm" asChild variant="secondary">
+            <Link to="/">Back to home</Link>
+          </Button>
+        </div>
       </div>
       <div className="col-span-9 rounded-lg border bg-white p-4">
         <div className="mb-4 flex rounded-full border px-2 py-2 shadow-sm">
@@ -380,17 +385,12 @@ function RoutingConceptLayout() {
               <li>
                 <Link
                   to="/routing-concept/file/$"
-                  activeOptions={{
-                    exact: true,
-                    includeHash: true,
-                    includeSearch: true,
-                  }}
                   params={{
                     _splat: `random-${Math.round(Math.random() * 100)}`,
                   }}
                   className="rounded-full px-3 py-1.5 font-medium hover:bg-violet-300 [&.active]:bg-violet-300"
                 >
-                  Random File
+                  Random File Here
                 </Link>
               </li>
             </ul>

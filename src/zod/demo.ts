@@ -1,11 +1,11 @@
-import z from 'zod';
+import z from "zod";
 
 export const user = z.object({
   firstname: z.string(),
   lastname: z.string(),
 });
 
-const newUser = await user.parse({ firstname: 'John', lastname: 'Doe' });
+export const newUser = await user.parse({ firstname: "John", lastname: "Doe" });
 /**
  * {
  *    firstname: string;

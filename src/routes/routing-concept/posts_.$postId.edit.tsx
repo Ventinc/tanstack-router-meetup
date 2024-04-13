@@ -108,19 +108,19 @@ export function PostEditComponent() {
           <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
             <Card x-chunk="dashboard-07-chunk-3">
               <CardHeader>
-                <CardTitle>Product Status</CardTitle>
+                <CardTitle>Post Status</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="grid gap-6">
                   <div className="grid gap-3">
                     <Label htmlFor="status">Status</Label>
-                    <Select>
+                    <Select defaultValue="published">
                       <SelectTrigger id="status" aria-label="Select status">
                         <SelectValue placeholder="Select status" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="draft">Draft</SelectItem>
-                        <SelectItem value="published">Active</SelectItem>
+                        <SelectItem value="published">Published</SelectItem>
                         <SelectItem value="archived">Archived</SelectItem>
                       </SelectContent>
                     </Select>

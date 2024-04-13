@@ -1,26 +1,27 @@
+import { Button } from "@/components/ui/button";
+import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { routeTree } from "@/routeTree.gen";
 import {
   createRootRoute,
   Link,
   Outlet,
   RoutePaths,
+  ScrollRestoration,
 } from "@tanstack/react-router";
-import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import { ScreenSize } from "../components/screen-size";
-import { routeTree } from "@/routeTree.gen";
-import { Button } from "@/components/ui/button";
-import { Toaster } from "@/components/ui/toaster";
 
 export type AppPaths = RoutePaths<typeof routeTree>;
 
 export const Route = createRootRoute({
   component: () => (
     <>
+      <ScrollRestoration />
       <TooltipProvider>
         {/* <WrapperRoute> */}
         <Outlet />
         <ScreenSize />
-        <TanStackRouterDevtools initialIsOpen={false} position="bottom-right" />
+        {/* <TanStackRouterDevtools initialIsOpen={false} position="bottom-right" /> */}
         <Toaster />
         {/* </WrapperRoute> */}
       </TooltipProvider>
