@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { posts } from "@/data/posts";
-import { Link } from "@tanstack/react-router";
-import { createFileRoute, notFound } from "@tanstack/react-router";
+import { Link, createFileRoute, notFound } from "@tanstack/react-router";
 import { EditIcon } from "lucide-react";
 
 export const Route = createFileRoute("/routing-concept/posts/$postId")({

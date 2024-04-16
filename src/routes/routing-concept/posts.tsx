@@ -10,6 +10,7 @@ export const Route = createFileRoute("/routing-concept/posts")({
           {posts.map((post) => (
             <Link
               key={post.slug}
+              preload="intent"
               to="/routing-concept/posts/$postId"
               className="rounded-lg p-2 hover:bg-neutral-200 [&.active]:bg-violet-100"
               params={{

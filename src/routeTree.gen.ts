@@ -11,9 +11,10 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as TasksImport } from './routes/tasks'
 import { Route as RoutingConceptImport } from './routes/routing-concept'
-import { Route as TodoRouteImport } from './routes/todo/route'
 import { Route as IndexImport } from './routes/index'
+import { Route as TasksIndexImport } from './routes/tasks/index'
 import { Route as RoutingConceptIndexImport } from './routes/routing-concept/index'
 import { Route as RoutingConceptSettingsImport } from './routes/routing-concept/settings'
 import { Route as RoutingConceptPostsImport } from './routes/routing-concept/posts'
@@ -30,19 +31,24 @@ import { Route as RoutingConceptPostsPostIdEditImport } from './routes/routing-c
 
 // Create/Update Routes
 
-const RoutingConceptRoute = RoutingConceptImport.update({
-  path: '/routing-concept',
+const TasksRoute = TasksImport.update({
+  path: '/tasks',
   getParentRoute: () => rootRoute,
 } as any)
 
-const TodoRouteRoute = TodoRouteImport.update({
-  path: '/todo',
+const RoutingConceptRoute = RoutingConceptImport.update({
+  path: '/routing-concept',
   getParentRoute: () => rootRoute,
 } as any)
 
 const IndexRoute = IndexImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
+} as any)
+
+const TasksIndexRoute = TasksIndexImport.update({
+  path: '/',
+  getParentRoute: () => TasksRoute,
 } as any)
 
 const RoutingConceptIndexRoute = RoutingConceptIndexImport.update({
@@ -123,12 +129,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/todo': {
-      preLoaderRoute: typeof TodoRouteImport
-      parentRoute: typeof rootRoute
-    }
     '/routing-concept': {
       preLoaderRoute: typeof RoutingConceptImport
+      parentRoute: typeof rootRoute
+    }
+    '/tasks': {
+      preLoaderRoute: typeof TasksImport
       parentRoute: typeof rootRoute
     }
     '/routing-concept/_layout': {
@@ -150,6 +156,10 @@ declare module '@tanstack/react-router' {
     '/routing-concept/': {
       preLoaderRoute: typeof RoutingConceptIndexImport
       parentRoute: typeof RoutingConceptImport
+    }
+    '/tasks/': {
+      preLoaderRoute: typeof TasksIndexImport
+      parentRoute: typeof TasksImport
     }
     '/routing-concept/_layout/layout-a': {
       preLoaderRoute: typeof RoutingConceptLayoutLayoutAImport
@@ -190,7 +200,6 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren([
   IndexRoute,
-  TodoRouteRoute,
   RoutingConceptRoute.addChildren([
     RoutingConceptLayoutRoute.addChildren([
       RoutingConceptLayoutLayoutARoute,
@@ -209,6 +218,7 @@ export const routeTree = rootRoute.addChildren([
     RoutingConceptFileSplatRoute,
     RoutingConceptPostsPostIdEditRoute,
   ]),
+  TasksRoute.addChildren([TasksIndexRoute]),
 ])
 
 /* prettier-ignore-end */

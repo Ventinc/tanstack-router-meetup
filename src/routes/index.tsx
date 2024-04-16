@@ -8,6 +8,9 @@ export const Route = createFileRoute("/")({
         <Button asChild>
           <Link to="/routing-concept">Routing Concept</Link>
         </Button>
+        <Button asChild>
+          <Link to="/tasks">Tasks App Demo</Link>
+        </Button>
       </div>
     </div>
   ),

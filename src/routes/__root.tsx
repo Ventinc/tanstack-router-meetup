@@ -9,6 +9,7 @@ import {
   RoutePaths,
   ScrollRestoration,
 } from "@tanstack/react-router";
+import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import { ScreenSize } from "../components/screen-size";
 
 export type AppPaths = RoutePaths<typeof routeTree>;
@@ -21,7 +22,7 @@ export const Route = createRootRoute({
         {/* <WrapperRoute> */}
         <Outlet />
         <ScreenSize />
-        {/* <TanStackRouterDevtools initialIsOpen={false} position="bottom-right" /> */}
+        <TanStackRouterDevtools initialIsOpen={false} position="bottom-right" />
         <Toaster />
         {/* </WrapperRoute> */}
       </TooltipProvider>
