@@ -69,7 +69,7 @@ export const TaskLayout = ({ children }: { children: ReactNode }) => {
             Content de te revoir!
           </h2>
           <p className="text-muted-foreground">
-            Voici une liste de vos tâches pour ce mois-ci!
+            Voici une liste de tes tâches pour ce mois-ci!
           </p>
         </div>
         <div className="flex items-center space-x-2">

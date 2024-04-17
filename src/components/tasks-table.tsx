@@ -70,7 +70,7 @@ export const TaskTable = ({ tasks }: { tasks: Task[] }) => {
       </TableHeader>
       <TableBody>
         {tasks.map((task) => (
-          <TableRow id={task.id}>
+          <TableRow key={task.id} id={task.id}>
             <TableCell>
               <Checkbox aria-label="Select row" className="translate-y-[2px]" />
             </TableCell>
