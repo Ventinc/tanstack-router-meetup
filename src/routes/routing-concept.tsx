@@ -17,9 +17,134 @@ export const Route = createFileRoute("/routing-concept")({
   ),
 });
 
-function linkDisplay(link: AppPaths) {
+function itemDisplay(link: AppPaths) {
   return link.replace("/routing-concept", "");
 }
+
+const DIRECTORY_ROUTES = [
+  {
+    link: {
+      to: "/routing-concept",
+    },
+    name: "__root.tsx",
+    icon: FileIcon,
+  },
+  {
+    link: {
+      to: "/routing-concept/",
+    },
+    name: "index.tsx",
+    icon: FileIcon,
+  },
+  {
+    link: {
+      to: "/routing-concept/about",
+    },
+    name: "about.tsx",
+    icon: FileIcon,
+  },
+  {
+    link: {
+      to: "/routing-concept/posts",
+    },
+    name: "posts.tsx",
+    icon: FileIcon,
+  },
+  {
+    name: "posts",
+    icon: FolderIcon,
+    children: [
+      {
+        routeId: "/routing-concept/posts/",
+        link: {
+          to: "/routing-concept/posts",
+        },
+        name: "index.tsx",
+        icon: FileIcon,
+      },
+      {
+        link: {
+          to: "/routing-concept/posts/$postId",
+          params: {
+            postId: "the-art-of-mindfulness",
+          },
+        },
+        name: "$postId.tsx",
+        icon: FileIcon,
+      },
+    ],
+  },
+  {
+    name: "posts_",
+    icon: FolderIcon,
+    children: [
+      {
+        link: {
+          to: "/routing-concept/posts/$postId/edit",
+          params: {
+            postId: "the-art-of-mindfulness",
+          },
+        },
+        name: "posts_.$postId.tsx",
+        icon: FileIcon,
+      },
+    ],
+  },
+  {
+    link: {
+      to: "/routing-concept/settings",
+    },
+    name: "settings.tsx",
+    icon: FileIcon,
+  },
+  {
+    name: "settings",
+    icon: FolderIcon,
+    children: [
+      {
+        link: {
+          to: "/routing-concept/settings/notification",
+        },
+        name: "notification.tsx",
+        icon: FileIcon,
+      },
+      {
+        link: {
+          to: "/routing-concept/settings/profile",
+        },
+        name: "profile.tsx",
+        icon: FileIcon,
+      },
+    ],
+  },
+  {
+    routeId: "/routing-concept/_layout",
+    name: "_layout.tsx",
+    icon: FileIcon,
+  },
+  {
+    name: "_layout",
+    icon: FolderIcon,
+    children: [
+      {
+        routeId: "/routing-concept/_layout/layout-a",
+        link: {
+          to: "/routing-concept/layout-a",
+        },
+        name: "layout-a.tsx",
+        icon: FileIcon,
+      },
+      {
+        routeId: "/routing-concept/_layout/layout-b",
+        link: {
+          to: "/routing-concept/layout-b",
+        },
+        name: "layout-b.tsx",
+        icon: FileIcon,
+      },
+    ],
+  },
+];
 
 function RoutingConceptLayout() {
   return (
@@ -33,76 +158,113 @@ function RoutingConceptLayout() {
           </TabsList>
           <TabsContent value="flat-routes">
             <Tree
-              linkDisplay={linkDisplay}
+              itemDisplay={itemDisplay}
               data={[
                 {
-                  to: "/routing-concept",
+                  link: {
+                    to: "/routing-concept",
+                  },
                   name: "__root.tsx",
                   icon: FileIcon,
                 },
                 {
-                  to: "/routing-concept/",
-                  exact: true,
+                  link: {
+                    to: "/routing-concept/",
+                  },
                   name: "index.tsx",
                   icon: FileIcon,
                 },
                 {
-                  to: "/routing-concept/about",
+                  link: {
+                    to: "/routing-concept/about",
+                  },
                   name: "about.tsx",
                   icon: FileIcon,
                 },
                 {
-                  to: "/routing-concept/posts",
+                  link: {
+                    to: "/routing-concept/posts",
+                  },
                   name: "posts.tsx",
                   icon: FileIcon,
                 },
                 {
-                  to: "/routing-concept/posts",
+                  routeId: "/routing-concept/posts/",
+                  link: {
+                    to: "/routing-concept/posts",
+                  },
                   name: "posts.index.tsx",
-                  exact: true,
                   icon: FileIcon,
                 },
                 {
-                  to: "/routing-concept/posts/$postId",
+                  link: {
+                    to: "/routing-concept/posts/$postId",
+                    params: {
+                      postId: "the-art-of-mindfulness",
+                    },
+                  },
                   name: "posts.$postId.tsx",
                   icon: FileIcon,
                 },
                 {
-                  to: "/routing-concept/posts/$postId/edit",
+                  link: {
+                    to: "/routing-concept/posts/$postId/edit",
+                    params: {
+                      postId: "the-art-of-mindfulness",
+                    },
+                  },
                   name: "posts_.$postId.tsx",
                   icon: FileIcon,
                 },
                 {
-                  to: "/routing-concept/settings",
+                  link: {
+                    to: "/routing-concept/settings",
+                  },
                   name: "settings.tsx",
                   icon: FileIcon,
                 },
                 {
-                  to: "/routing-concept/settings/notification",
+                  link: {
+                    to: "/routing-concept/settings/notification",
+                  },
                   name: "settings.notification.tsx",
                   icon: FileIcon,
                 },
                 {
-                  to: "/routing-concept/settings/profile",
+                  link: {
+                    to: "/routing-concept/settings/profile",
+                  },
                   name: "settings.profile.tsx",
                   icon: FileIcon,
                 },
                 {
+                  routeId: "/routing-concept/_layout",
                   name: "_layout.tsx",
                   icon: FileIcon,
                 },
                 {
-                  to: "/routing-concept/layout-a",
+                  routeId: "/routing-concept/_layout/layout-a",
+                  link: {
+                    to: "/routing-concept/layout-a",
+                  },
                   name: "_layout.layout-a.tsx",
                   icon: FileIcon,
                 },
                 {
-                  to: "/routing-concept/layout-b",
+                  routeId: "/routing-concept/_layout/layout-b",
+                  link: {
+                    to: "/routing-concept/layout-b",
+                  },
                   name: "_layout.layout-b.tsx",
                   icon: FileIcon,
                 },
                 {
-                  to: "/routing-concept/file/random-image.png" as AppPaths,
+                  link: {
+                    to: "/routing-concept/file/$",
+                    params: {
+                      _splat: "random-image.png",
+                    },
+                  },
                   name: "file.$.tsx",
                   icon: FileIcon,
                 },
@@ -111,104 +273,20 @@ function RoutingConceptLayout() {
           </TabsContent>
           <TabsContent value="directory-routes">
             <Tree
-              linkDisplay={linkDisplay}
+              itemDisplay={itemDisplay}
               data={[
-                {
-                  to: "/routing-concept",
-                  name: "__root.tsx",
-                  icon: FileIcon,
-                },
-                {
-                  to: "/routing-concept/",
-                  exact: true,
-                  name: "index.tsx",
-                  icon: FileIcon,
-                },
-                {
-                  to: "/routing-concept/about",
-                  name: "about.tsx",
-                  icon: FileIcon,
-                },
-                {
-                  to: "/routing-concept/posts",
-                  name: "posts.tsx",
-                  icon: FileIcon,
-                },
-                {
-                  name: "posts",
-                  icon: FolderIcon,
-                  children: [
-                    {
-                      to: "/routing-concept/posts",
-                      name: "index.tsx",
-                      exact: true,
-                      icon: FileIcon,
-                    },
-                    {
-                      to: "/routing-concept/posts/$postId",
-                      name: "$postId.tsx",
-                      icon: FileIcon,
-                    },
-                  ],
-                },
-                {
-                  name: "posts_",
-                  icon: FolderIcon,
-                  children: [
-                    {
-                      to: "/routing-concept/posts/$postId/edit",
-                      name: "posts_.$postId.tsx",
-                      icon: FileIcon,
-                    },
-                  ],
-                },
-                {
-                  to: "/routing-concept/settings",
-                  name: "settings.tsx",
-                  icon: FileIcon,
-                },
-                {
-                  name: "settings",
-                  icon: FolderIcon,
-                  children: [
-                    {
-                      to: "/routing-concept/settings/notification",
-                      name: "notification.tsx",
-                      icon: FileIcon,
-                    },
-                    {
-                      to: "/routing-concept/settings/profile",
-                      name: "profile.tsx",
-                      icon: FileIcon,
-                    },
-                  ],
-                },
-                {
-                  name: "_layout.tsx",
-                  icon: FileIcon,
-                },
-                {
-                  name: "_layout",
-                  icon: FolderIcon,
-                  children: [
-                    {
-                      to: "/routing-concept/layout-a",
-                      name: "layout-a.tsx",
-                      icon: FileIcon,
-                    },
-                    {
-                      to: "/routing-concept/layout-b",
-                      name: "layout-b.tsx",
-                      icon: FileIcon,
-                    },
-                  ],
-                },
+                ...DIRECTORY_ROUTES,
                 {
                   name: "file",
                   icon: FolderIcon,
                   children: [
                     {
-                      to: "/routing-concept/file/random-image.png" as AppPaths,
+                      link: {
+                        to: "/routing-concept/file/$",
+                        params: {
+                          _splat: "random-image.png",
+                        },
+                      },
                       name: "$.tsx",
                       icon: FileIcon,
                     },
@@ -219,100 +297,16 @@ function RoutingConceptLayout() {
           </TabsContent>
           <TabsContent value="mixed-routes">
             <Tree
-              linkDisplay={linkDisplay}
+              itemDisplay={itemDisplay}
               data={[
+                ...DIRECTORY_ROUTES,
                 {
-                  to: "/routing-concept",
-                  name: "__root.tsx",
-                  icon: FileIcon,
-                },
-                {
-                  to: "/routing-concept/",
-                  exact: true,
-                  name: "index.tsx",
-                  icon: FileIcon,
-                },
-                {
-                  to: "/routing-concept/about",
-                  name: "about.tsx",
-                  icon: FileIcon,
-                },
-                {
-                  to: "/routing-concept/posts",
-                  name: "posts.tsx",
-                  icon: FileIcon,
-                },
-                {
-                  name: "posts",
-                  icon: FolderIcon,
-                  children: [
-                    {
-                      to: "/routing-concept/posts",
-                      name: "index.tsx",
-                      exact: true,
-                      icon: FileIcon,
+                  link: {
+                    to: "/routing-concept/file/$",
+                    params: {
+                      _splat: "random-image.png",
                     },
-                    {
-                      to: "/routing-concept/posts/$postId",
-                      name: "$postId.tsx",
-                      icon: FileIcon,
-                    },
-                  ],
-                },
-                {
-                  name: "posts_",
-                  icon: FolderIcon,
-                  children: [
-                    {
-                      to: "/routing-concept/posts/$postId/edit",
-                      name: "posts_.$postId.tsx",
-                      icon: FileIcon,
-                    },
-                  ],
-                },
-                {
-                  to: "/routing-concept/settings",
-                  name: "settings.tsx",
-                  icon: FileIcon,
-                },
-                {
-                  name: "settings",
-                  icon: FolderIcon,
-                  children: [
-                    {
-                      to: "/routing-concept/settings/notification",
-                      name: "notification.tsx",
-                      icon: FileIcon,
-                    },
-                    {
-                      to: "/routing-concept/settings/profile",
-                      name: "profile.tsx",
-                      icon: FileIcon,
-                    },
-                  ],
-                },
-                {
-                  name: "_layout.tsx",
-                  icon: FileIcon,
-                },
-                {
-                  name: "_layout",
-                  icon: FolderIcon,
-                  children: [
-                    {
-                      to: "/routing-concept/layout-a",
-                      name: "layout-a.tsx",
-                      icon: FileIcon,
-                    },
-                    {
-                      to: "/routing-concept/layout-b",
-                      name: "layout-b.tsx",
-                      icon: FileIcon,
-                    },
-                  ],
-                },
-                {
-                  to: "/routing-concept/file/random-image.png" as AppPaths,
+                  },
                   name: "file.$.tsx",
                   icon: FileIcon,
                   highlight: true,
