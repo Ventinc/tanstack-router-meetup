@@ -10,7 +10,8 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Link, ReactNode } from "@tanstack/react-router";
+import { Link, ReactNode, useRouterState } from "@tanstack/react-router";
+import { Loader2Icon } from "lucide-react";
 
 export function UserNav() {
   return (
@@ -61,16 +62,21 @@ export function UserNav() {
 }
 
 export const TaskLayout = ({ children }: { children: ReactNode }) => {
+  const isLoading = useRouterState({ select: (s) => s.status === "pending" });
   return (
     <div className="hidden h-full flex-1 flex-col space-y-8 p-8 md:flex">
       <div className="flex items-center justify-between space-y-2">
-        <div>
-          <h2 className="text-2xl font-bold tracking-tight">
-            Content de te revoir!
-          </h2>
-          <p className="text-muted-foreground">
-            Voici une liste de tes tâches pour ce mois-ci!
-          </p>
+        <div className="flex items-center gap-6">
+          <div>
+            <h2 className="text-2xl font-bold tracking-tight">
+              Content de te revoir!
+            </h2>
+            <p className="text-muted-foreground">
+              Voici une liste de tes tâches pour ce mois-ci!
+            </p>
+          </div>
+
+          {isLoading ? <Loader2Icon className="size-10 animate-spin" /> : null}
         </div>
         <div className="flex items-center space-x-2">
           <UserNav />

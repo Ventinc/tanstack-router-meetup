@@ -120,7 +120,8 @@ export const fetchTasks = async ({
   statuses?: (typeof statusesValues)[number][];
   priorities?: (typeof prioritiesValues)[number][];
 }) => {
-  await sleep(_.random(0));
+  // await sleep(_.random(1500, 3000));
+  await sleep(_.random(0, 150));
 
   const rawPage = page - 1;
 

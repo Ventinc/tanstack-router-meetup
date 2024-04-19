@@ -10,34 +10,20 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 
 import { Input } from "@/components/ui/input";
 
+import { TaskFilter } from "@/components/tasks-filter";
 import { TasksPagination } from "@/components/tasks-pagination";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-  CommandSeparator,
-} from "@/components/ui/command";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Separator } from "@/components/ui/separator";
-import { cn } from "@/lib/utils";
-import { CheckIcon, CirclePlusIcon, LucideIcon, XIcon } from "lucide-react";
+import { debounce } from "lodash";
+import { XIcon } from "lucide-react";
+import { ChangeEvent, useMemo } from "react";
 import { z } from "zod";
 
 const tasksSearchParams = z.object({
-  q: z.string().catch(""),
-  statuses: z.array(z.enum(statusesValues)).catch([]),
-  priorities: z.array(z.enum(prioritiesValues)).catch([]),
-  limit: z.number().min(10).catch(10),
-  page: z.number().min(1).catch(1),
+  q: z.string().optional().catch(""),
+  statuses: z.array(z.enum(statusesValues)).optional().catch([]),
+  priorities: z.array(z.enum(prioritiesValues)).optional().catch([]),
+  limit: z.number().min(10).optional().catch(10),
+  page: z.number().min(1).optional().catch(1),
 });
 
 export type TaskSearchParams = z.infer<typeof tasksSearchParams>;
@@ -62,144 +48,35 @@ export const Route = createFileRoute("/tasks/")({
   component: TasksComponent,
 });
 
-export function TableFilter<OptionValue extends string>({
-  title,
-  options,
-  value = [],
-  onChange,
-}: {
-  title?: string;
-  options: Readonly<
-    {
-      label: string;
-      value: OptionValue;
-      icon?: LucideIcon;
-    }[]
-  >;
-  value?: OptionValue[];
-  onChange?: (value: OptionValue[]) => void;
-}) {
-  const selectedValues = new Set(value);
-
-  return (
-    <Popover>
-      <PopoverTrigger asChild>
-        <Button variant="outline" size="sm" className="h-8 border-dashed">
-          <CirclePlusIcon className="mr-2 size-4" />
-          {title}
-          {selectedValues?.size > 0 && (
-            <>
-              <Separator orientation="vertical" className="mx-2 h-4" />
-              <Badge
-                variant="secondary"
-                className="rounded-sm px-1 font-normal lg:hidden"
-              >
-                {selectedValues.size}
-              </Badge>
-              <div className="hidden space-x-1 lg:flex">
-                {selectedValues.size > 2 ? (
-                  <Badge
-                    variant="secondary"
-                    className="rounded-sm px-1 font-normal"
-                  >
-                    {selectedValues.size} selected
-                  </Badge>
-                ) : (
-                  options
-                    .filter((option) => selectedValues.has(option.value))
-                    .map((option) => (
-                      <Badge
-                        variant="secondary"
-                        key={option.value}
-                        className="rounded-sm px-1 font-normal"
-                      >
-                        {option.label}
-                      </Badge>
-                    ))
-                )}
-              </div>
-            </>
-          )}
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0" align="start">
-        <Command>
-          <CommandInput placeholder={title} />
-          <CommandEmpty>No results found.</CommandEmpty>
-          <CommandList>
-            <CommandGroup>
-              {options.map((option) => {
-                const isSelected = selectedValues.has(option.value);
-                return (
-                  <CommandItem
-                    key={option.value}
-                    onSelect={() => {
-                      if (isSelected) {
-                        selectedValues.delete(option.value);
-                      } else {
-                        selectedValues.add(option.value);
-                      }
-                      const filterValues = Array.from(selectedValues);
-                      onChange?.(filterValues);
-                    }}
-                  >
-                    <div
-                      className={cn(
-                        "mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary",
-                        isSelected
-                          ? "bg-primary text-primary-foreground"
-                          : "opacity-50 [&_svg]:invisible",
-                      )}
-                    >
-                      <CheckIcon className={cn("size-4")} />
-                    </div>
-                    {option.icon && (
-                      <option.icon className="mr-2 size-4 text-muted-foreground" />
-                    )}
-                    <span>{option.label}</span>
-                  </CommandItem>
-                );
-              })}
-            </CommandGroup>
-            {selectedValues.size > 0 && (
-              <>
-                <CommandSeparator />
-                <CommandGroup>
-                  <CommandItem
-                    onSelect={() => onChange?.([])}
-                    className="justify-center text-center"
-                  >
-                    Clear filters
-                  </CommandItem>
-                </CommandGroup>
-              </>
-            )}
-          </CommandList>
-        </Command>
-      </PopoverContent>
-    </Popover>
-  );
-}
-
 export function TasksToolbar() {
   const params = Route.useSearch();
   const navigate = useNavigate({ from: Route.fullPath });
-  const isFiltered = params.q.length > 0 || params.statuses.length > 0;
+  const isFiltered = Boolean(
+    params.q?.length || params.statuses?.length || params.q?.length,
+  );
+
+  const debounceSearch = useMemo(
+    () =>
+      debounce(
+        (event: ChangeEvent<HTMLInputElement>) =>
+          navigate({
+            search: (prev) => ({ ...prev, q: event.target.value, page: 1 }),
+          }),
+        400,
+      ),
+    [navigate],
+  );
 
   return (
     <div className="flex items-center justify-between">
       <div className="flex flex-1 items-center space-x-2">
         <Input
           placeholder="Filter tasks..."
-          value={params.q ?? ""}
-          onChange={(event) =>
-            navigate({
-              search: (prev) => ({ ...prev, q: event.target.value, page: 1 }),
-            })
-          }
+          defaultValue={params.q ?? ""}
+          onChange={debounceSearch}
           className="h-8 w-[150px] lg:w-[250px]"
         />
-        <TableFilter
+        <TaskFilter
           title="Status"
           options={statuses}
           value={params.statuses}
@@ -209,7 +86,7 @@ export function TasksToolbar() {
             })
           }
         />
-        <TableFilter
+        <TaskFilter
           title="Priority"
           options={priorities}
           value={params.priorities}
@@ -256,8 +133,8 @@ function TasksComponent() {
         <TaskTable tasks={tasks.data} />
       </div>
       <TasksPagination
-        currentPage={search.page}
-        limit={search.limit}
+        currentPage={search.page ?? 1}
+        limit={search.limit ?? 10}
         totalPage={tasks.totalPage}
         onLimitChange={(value) =>
           navigate({
