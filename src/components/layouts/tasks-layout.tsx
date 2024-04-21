@@ -61,7 +61,7 @@ export function UserNav() {
   );
 }
 
-export const TaskLayout = ({ children }: { children: ReactNode }) => {
+export const TasksLayout = ({ children }: { children: ReactNode }) => {
   const isLoading = useRouterState({ select: (s) => s.status === "pending" });
   return (
     <div className="hidden h-full flex-1 flex-col space-y-8 p-8 md:flex">

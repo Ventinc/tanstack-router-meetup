@@ -1,8 +1,14 @@
 import { Tree } from "@/components/tree";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { cn } from "@/lib/utils";
 import { AppPaths } from "@/routes/__root";
-import { Link, Outlet, createFileRoute } from "@tanstack/react-router";
+import {
+  Link,
+  Outlet,
+  createFileRoute,
+  useMatchRoute,
+} from "@tanstack/react-router";
 import { FileIcon, FolderIcon } from "lucide-react";
 
 export const Route = createFileRoute("/routing-concept")({
@@ -79,14 +85,20 @@ const DIRECTORY_ROUTES = [
     icon: FolderIcon,
     children: [
       {
-        link: {
-          to: "/routing-concept/posts/$postId/edit",
-          params: {
-            postId: "the-art-of-mindfulness",
+        name: "$postId",
+        icon: FolderIcon,
+        children: [
+          {
+            link: {
+              to: "/routing-concept/posts/$postId/edit",
+              params: {
+                postId: "the-art-of-mindfulness",
+              },
+            },
+            name: "edit.tsx",
+            icon: FileIcon,
           },
-        },
-        name: "posts_.$postId.tsx",
-        icon: FileIcon,
+        ],
       },
     ],
   },
@@ -147,14 +159,16 @@ const DIRECTORY_ROUTES = [
 ];
 
 function RoutingConceptLayout() {
+  const matchRoute = useMatchRoute();
+
   return (
-    <div className="grid min-h-screen grid-cols-12 gap-4 bg-neutral-100 p-4">
-      <div className="col-span-3 rounded-lg border bg-white p-2 px-4">
+    <div className="grid min-h-screen grid-cols-12 bg-white">
+      <div className="col-span-3 rounded-r-2xl border-r border-neutral-100 bg-neutral-50 p-2 px-4">
         <Tabs defaultValue="flat-routes" className="flex flex-col">
           <TabsList className="self-center">
-            <TabsTrigger value="flat-routes">Flat Routes</TabsTrigger>
-            <TabsTrigger value="directory-routes">Directory Routes</TabsTrigger>
-            <TabsTrigger value="mixed-routes">Mixed Routes</TabsTrigger>
+            <TabsTrigger value="flat-routes">Flat</TabsTrigger>
+            <TabsTrigger value="directory-routes">Directory</TabsTrigger>
+            <TabsTrigger value="mixed-routes">Mixed</TabsTrigger>
           </TabsList>
           <TabsContent value="flat-routes">
             <Tree
@@ -213,7 +227,7 @@ function RoutingConceptLayout() {
                       postId: "the-art-of-mindfulness",
                     },
                   },
-                  name: "posts_.$postId.tsx",
+                  name: "posts_.$postId.edit.tsx",
                   icon: FileIcon,
                 },
                 {
@@ -334,7 +348,7 @@ function RoutingConceptLayout() {
           </Button>
         </div>
       </div>
-      <div className="col-span-9 rounded-lg border bg-white p-4">
+      <div className="col-span-9 bg-white p-4">
         <div className="mb-4 flex rounded-full border px-2 py-2 shadow-sm">
           <nav className="flex">
             <ul className="flex gap-2">
@@ -382,7 +396,14 @@ function RoutingConceptLayout() {
                   params={{
                     _splat: `random-${Math.round(Math.random() * 100)}`,
                   }}
-                  className="rounded-full px-3 py-1.5 font-medium hover:bg-violet-300 [&.active]:bg-violet-300"
+                  className={cn(
+                    "rounded-full px-3 py-1.5 font-medium hover:bg-violet-300 [&.active]:bg-violet-300",
+                    {
+                      "bg-violet-300": matchRoute({
+                        to: "/routing-concept/file/$",
+                      }),
+                    },
+                  )}
                 >
                   Random File Here
                 </Link>

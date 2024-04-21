@@ -9,7 +9,7 @@ function RandomFileComponent() {
   const params = Route.useParams();
 
   return (
-    <div>
+    <div className="container">
       <h1 className="text-4xl font-black">Random File</h1>
       <div className="pb-4 text-xs font-medium text-neutral-500">
         <p>Splat: {params._splat}</p>

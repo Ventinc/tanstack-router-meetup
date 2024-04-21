@@ -32,7 +32,12 @@ function PostComponent() {
       <p>{post.content}</p>
       <div className="flex justify-end">
         <Button variant="outline" size="sm" asChild>
-          <Link from={Route.fullPath} to="./edit" className="flex items-center">
+          <Link
+            from={Route.fullPath}
+            to="./edit"
+            params={{ postId: post.slug }}
+            className="flex items-center"
+          >
             <EditIcon className="mr-2 size-4" />
             Edit
           </Link>

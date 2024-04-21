@@ -20,6 +20,7 @@ import { Route as RoutingConceptSettingsImport } from './routes/routing-concept/
 import { Route as RoutingConceptPostsImport } from './routes/routing-concept/posts'
 import { Route as RoutingConceptAboutImport } from './routes/routing-concept/about'
 import { Route as RoutingConceptLayoutImport } from './routes/routing-concept/_layout'
+import { Route as RoutingConceptSettingsIndexImport } from './routes/routing-concept/settings.index'
 import { Route as RoutingConceptPostsIndexImport } from './routes/routing-concept/posts.index'
 import { Route as RoutingConceptSettingsProfileImport } from './routes/routing-concept/settings.profile'
 import { Route as RoutingConceptSettingsNotificationImport } from './routes/routing-concept/settings.notification'
@@ -75,6 +76,12 @@ const RoutingConceptLayoutRoute = RoutingConceptLayoutImport.update({
   id: '/_layout',
   getParentRoute: () => RoutingConceptRoute,
 } as any)
+
+const RoutingConceptSettingsIndexRoute =
+  RoutingConceptSettingsIndexImport.update({
+    path: '/',
+    getParentRoute: () => RoutingConceptSettingsRoute,
+  } as any)
 
 const RoutingConceptPostsIndexRoute = RoutingConceptPostsIndexImport.update({
   path: '/',
@@ -189,6 +196,10 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RoutingConceptPostsIndexImport
       parentRoute: typeof RoutingConceptPostsImport
     }
+    '/routing-concept/settings/': {
+      preLoaderRoute: typeof RoutingConceptSettingsIndexImport
+      parentRoute: typeof RoutingConceptSettingsImport
+    }
     '/routing-concept/posts/$postId/edit': {
       preLoaderRoute: typeof RoutingConceptPostsPostIdEditImport
       parentRoute: typeof RoutingConceptImport
@@ -213,6 +224,7 @@ export const routeTree = rootRoute.addChildren([
     RoutingConceptSettingsRoute.addChildren([
       RoutingConceptSettingsNotificationRoute,
       RoutingConceptSettingsProfileRoute,
+      RoutingConceptSettingsIndexRoute,
     ]),
     RoutingConceptIndexRoute,
     RoutingConceptFileSplatRoute,
