@@ -28,7 +28,6 @@ export const Route = createRootRoute({
       </TooltipProvider>
     </>
   ),
-
   notFoundComponent() {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center gap-2">
