@@ -405,7 +405,7 @@ function RoutingConceptLayout() {
                     },
                   )}
                 >
-                  Random File Here
+                  Random File
                 </Link>
               </li>
             </ul>
